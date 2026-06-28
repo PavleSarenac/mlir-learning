@@ -9,14 +9,14 @@ find_package(MLIR REQUIRED CONFIG
 
 include_directories(${LLVM_INCLUDE_DIRS})
 include_directories(${MLIR_INCLUDE_DIRS})
-include_directories(toy/include)
+include_directories(include)
 
 add_executable(toyc-chapter1
         toyc.cpp
-        toy/parser/AST.cpp
-        toy/include/toy/AST.h
-        toy/include/toy/Lexer.h
-        toy/include/toy/Parser.h
+        parser/AST.cpp
+        include/toy/AST.h
+        include/toy/Lexer.h
+        include/toy/Parser.h
 )
 
 llvm_map_components_to_libnames(llvm_libs Support)

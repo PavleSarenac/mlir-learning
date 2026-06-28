@@ -117,12 +117,12 @@ Module:
     } // Block
 ```
 
-You can reproduce this result and play with the [ast.toy](toy/test/ast.toy) example. Try running
+You can reproduce this result and play with the [ast.toy](test/ast.toy) example. Try running
 `/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/cmake-build-debug/src/chapter-01/toyc-chapter1
-/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-01/toy/test/ast.toy -emit=ast`.
+/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-01/test/ast.toy -emit=ast`.
 
-The code for the lexer is fairly straightforward; it is all in a single header [Lexer.h](toy/include/toy/Lexer.h).
-The parser can be found in [Parser.h](toy/include/toy/Parser.h);
+The code for the lexer is fairly straightforward; it is all in a single header [Lexer.h](include/toy/Lexer.h).
+The parser can be found in [Parser.h](include/toy/Parser.h);
 it is a recursive descent parser. If
 you are not familiar with such a Lexer/Parser, these are very similar to the
 LLVM Kaleidoscope equivalent that are detailed in the first two chapters of the
