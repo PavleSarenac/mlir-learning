@@ -2,7 +2,7 @@
 
 [TOC]
 
-In the [previous chapter](chapter-05.md), we introduced the
+In the [previous chapter](../chapter-05/README.md), we introduced the
 [dialect conversion](../../DialectConversion.md) framework and partially lowered
 many of the `Toy` operations to affine loop nests for optimization. In this
 chapter, we will finally lower to LLVM for code generation.
@@ -54,7 +54,7 @@ static FlatSymbolRefAttr getOrInsertPrintf(PatternRewriter &rewriter,
 
 Now that the lowering for the printf operation has been defined, we can specify
 the components necessary for the lowering. These are largely the same as the
-components defined in the [previous chapter](chapter-05.md).
+components defined in the [previous chapter](../chapter-05/README.md).
 
 ### Conversion Target
 
@@ -331,4 +331,4 @@ The example code used throughout this section can be found in
 test/Examples/Toy/Ch6/llvm-lowering.mlir.
 
 So far, we have worked with primitive data types. In the
-[next chapter](chapter-07.md), we will add a composite `struct` type.
+[next chapter](../chapter-07/README.md), we will add a composite `struct` type.

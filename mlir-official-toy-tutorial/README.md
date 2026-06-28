@@ -17,24 +17,24 @@ so, see
 
 This tutorial is divided in the following chapters:
 
--   [Chapter #1](./docs/chapter-01.md): Introduction to the Toy language and the definition
-    of its AST.
--   [Chapter #2](./docs/chapter-02.md): Traversing the AST to emit a dialect in MLIR,
-    introducing base MLIR concepts. Here we show how to start attaching
-    semantics to our custom operations in MLIR.
--   [Chapter #3](./docs/chapter-03.md): High-level language-specific optimization using
-    pattern rewriting system.
--   [Chapter #4](./docs/chapter-04.md): Writing generic dialect-independent transformations
-    with Interfaces. Here we will show how to plug dialect specific information
-    into generic transformations like shape inference and inlining.
--   [Chapter #5](./docs/chapter-05.md): Partially lowering to lower-level dialects. We'll
-    convert some of our high level language specific semantics towards a generic
-    affine oriented dialect for optimization.
--   [Chapter #6](./docs/chapter-06.md): Lowering to LLVM and code generation. Here we'll
-    target LLVM IR for code generation, and detail more of the lowering
-    framework.
--   [Chapter #7](./docs/chapter-07.md): Extending Toy: Adding support for a composite type.
-    We'll demonstrate how to add a custom type to MLIR, and how it fits in the
-    existing pipeline.
+- [Chapter #1](src/chapter-01/README.md): Introduction to the Toy language and the definition
+  of its AST.
+- [Chapter #2](src/chapter-02/README.md): Traversing the AST to emit a dialect in MLIR,
+  introducing base MLIR concepts. Here we show how to start attaching
+  semantics to our custom operations in MLIR.
+- [Chapter #3](src/chapter-03/README.md): High-level language-specific optimization using
+  pattern rewriting system.
+- [Chapter #4](src/chapter-04/README.md): Writing generic dialect-independent transformations
+  with Interfaces. Here we will show how to plug dialect specific information
+  into generic transformations like shape inference and inlining.
+- [Chapter #5](src/chapter-05/README.md): Partially lowering to lower-level dialects. We'll
+  convert some of our high level language specific semantics towards a generic
+  affine oriented dialect for optimization.
+- [Chapter #6](src/chapter-06/README.md): Lowering to LLVM and code generation. Here we'll
+  target LLVM IR for code generation, and detail more of the lowering
+  framework.
+- [Chapter #7](src/chapter-07/README.md): Extending Toy: Adding support for a composite type.
+  We'll demonstrate how to add a custom type to MLIR, and how it fits in the
+  existing pipeline.
 
-The [first chapter](./docs/chapter-01.md) will introduce the Toy language and AST.
+The [first chapter](src/chapter-01/README.md) will introduce the Toy language and AST.

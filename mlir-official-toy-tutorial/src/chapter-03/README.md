@@ -20,7 +20,7 @@ transformations: 1. Imperative, C++ pattern-match and rewrite 2. Declarative,
 rule-based pattern-match and rewrite using table-driven
 [Declarative Rewrite Rules](../../DeclarativeRewrites.md) (DRR). Note that the
 use of DRR requires that the operations be defined using ODS, as described in
-[Chapter 2](chapter-02.md).
+[Chapter 2](../chapter-02/README.md).
 
 ## Optimize Transpose using C++ style pattern-match and rewrite
 
@@ -258,5 +258,5 @@ Further details on the declarative rewrite method can be found at
 [Table-driven Declarative Rewrite Rule (DRR)](../../DeclarativeRewrites.md).
 
 In this chapter, we saw how to use certain core transformations through always
-available hooks. In the [next chapter](chapter-04.md), we will see how to use generic
+available hooks. In the [next chapter](../chapter-04/README.md), we will see how to use generic
 solutions that scale better through Interfaces.

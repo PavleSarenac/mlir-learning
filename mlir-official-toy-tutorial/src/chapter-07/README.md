@@ -2,7 +2,7 @@
 
 [TOC]
 
-In the [previous chapter](chapter-06.md), we demonstrated an end-to-end compilation
+In the [previous chapter](../chapter-06/README.md), we demonstrated an end-to-end compilation
 flow from our Toy front-end to LLVM IR. In this chapter, we will extend the Toy
 language to support a new composite `struct` type.
 
@@ -62,7 +62,7 @@ representation.
 
 #### Defining the Type Class
 
-As mentioned in [chapter 2](chapter-02.md), [`Type`](../../LangRef.md/#type-system)
+As mentioned in [chapter 2](../chapter-02/README.md), [`Type`](../../LangRef.md/#type-system)
 objects in MLIR are value-typed and rely on having an internal storage object
 that holds the actual data for the type. The `Type` class in itself acts as a
 simple wrapper around an internal `TypeStorage` object that is uniqued within an
@@ -451,7 +451,7 @@ module {
 ```
 
 We have several `toy.struct_access` operations that access into a
-`toy.struct_constant`. As detailed in [chapter 3](chapter-03.md) (FoldConstantReshape),
+`toy.struct_constant`. As detailed in [chapter 3](../chapter-03/README.md) (FoldConstantReshape),
 we can add folders for these `toy` operations by setting the `hasFolder` bit
 on the operation definition and providing a definition of the `*Op::fold`
 method.

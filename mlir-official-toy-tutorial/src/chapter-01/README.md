@@ -133,4 +133,4 @@ you are not familiar with such a Lexer/Parser, these are very similar to the
 LLVM Kaleidoscope equivalent that are detailed in the first two chapters of the
 [Kaleidoscope Tutorial](https://llvm.org/docs/tutorial/MyFirstLanguageFrontend/LangImpl02.html).
 
-The [next chapter](chapter-02.md) will demonstrate how to convert this AST into MLIR.
+The [next chapter](../chapter-02/README.md) will demonstrate how to convert this AST into MLIR.

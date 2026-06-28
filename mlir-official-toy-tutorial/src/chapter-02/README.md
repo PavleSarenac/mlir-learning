@@ -46,58 +46,58 @@ Here is the MLIR assembly for the Toy `transpose` operations:
 
 Let's break down the anatomy of this MLIR operation:
 
--   `%t_tensor`
+- `%t_tensor`
 
-    *   The name given to the result defined by this operation (which includes
-        [a prefixed sigil to avoid collisions](../../LangRef.md/#identifiers-and-keywords)).
-        An operation may define zero or more results (in the context of Toy, we
-        will limit ourselves to single-result operations), which are SSA values.
-        The name is used during parsing but is not persistent (e.g., it is not
-        tracked in the in-memory representation of the SSA value).
+    * The name given to the result defined by this operation (which includes
+      [a prefixed sigil to avoid collisions](../../LangRef.md/#identifiers-and-keywords)).
+      An operation may define zero or more results (in the context of Toy, we
+      will limit ourselves to single-result operations), which are SSA values.
+      The name is used during parsing but is not persistent (e.g., it is not
+      tracked in the in-memory representation of the SSA value).
 
--   `"toy.transpose"`
+- `"toy.transpose"`
 
-    *   The name of the operation. It is expected to be a unique string, with
-        the namespace of the dialect prefixed before the "`.`". This can be read
-        as the `transpose` operation in the `toy` dialect.
+    * The name of the operation. It is expected to be a unique string, with
+      the namespace of the dialect prefixed before the "`.`". This can be read
+      as the `transpose` operation in the `toy` dialect.
 
--   `(%tensor)`
+- `(%tensor)`
 
-    *   A list of zero or more input operands (or arguments), which are SSA
-        values defined by other operations or referring to block arguments.
+    * A list of zero or more input operands (or arguments), which are SSA
+      values defined by other operations or referring to block arguments.
 
--   `{ inplace = true }`
+- `{ inplace = true }`
 
-    *   A dictionary of zero or more attributes, which are special operands that
-        are always constant. Here we define a boolean attribute named 'inplace'
-        that has a constant value of true.
+    * A dictionary of zero or more attributes, which are special operands that
+      are always constant. Here we define a boolean attribute named 'inplace'
+      that has a constant value of true.
 
--   `(tensor<2x3xf64>) -> tensor<3x2xf64>`
+- `(tensor<2x3xf64>) -> tensor<3x2xf64>`
 
-    *   This refers to the type of the operation in a functional form, spelling
-        the types of the arguments in parentheses and the type of the return
-        values afterward.
+    * This refers to the type of the operation in a functional form, spelling
+      the types of the arguments in parentheses and the type of the return
+      values afterward.
 
--   `loc("example/file/path":12:1)`
+- `loc("example/file/path":12:1)`
 
-    *   This is the location in the source code from which this operation
-        originated.
+    * This is the location in the source code from which this operation
+      originated.
 
 Shown here is the general form of an operation. As described above,
 the set of operations in MLIR is extensible. Operations are modeled
 using a small set of concepts, enabling operations to be reasoned
 about and manipulated generically. These concepts are:
 
--   A name for the operation.
--   A list of SSA operand values.
--   A list of [attributes](../../LangRef.md/#attributes).
--   A list of [types](../../LangRef.md/#type-system) for result values.
--   A [source location](../../Diagnostics.md/#source-locations) for debugging
-    purposes.
--   A list of successors [blocks](../../LangRef.md/#blocks) (for branches,
-    mostly).
--   A list of [regions](../../LangRef.md/#regions) (for structural operations
-    like functions).
+- A name for the operation.
+- A list of SSA operand values.
+- A list of [attributes](../../LangRef.md/#attributes).
+- A list of [types](../../LangRef.md/#type-system) for result values.
+- A [source location](../../Diagnostics.md/#source-locations) for debugging
+  purposes.
+- A list of successors [blocks](../../LangRef.md/#blocks) (for branches,
+  mostly).
+- A list of [regions](../../LangRef.md/#regions) (for structural operations
+  like functions).
 
 In MLIR, every operation has a mandatory source location associated with it.
 Contrary to LLVM, where debug info locations are metadata and can be dropped, in
@@ -658,14 +658,14 @@ With the C++ implementation defined, let's see how this can be mapped to the
 [declarative format](../../DefiningDialects/Operations.md/#declarative-assembly-format). The
 declarative format is largely composed of three different components:
 
-*   Directives
-    -   A type of builtin function, with an optional set of arguments.
-*   Literals
-    -   A keyword or punctuation surrounded by \`\`.
-*   Variables
-    -   An entity that has been registered on the operation itself, i.e. an
-        argument(attribute or operand), result, successor, etc. In the `PrintOp`
-        example above, a variable would be `$input`.
+* Directives
+    - A type of builtin function, with an optional set of arguments.
+* Literals
+    - A keyword or punctuation surrounded by \`\`.
+* Variables
+    - An entity that has been registered on the operation itself, i.e. an
+      argument(attribute or operand), result, successor, etc. In the `PrintOp`
+      example above, a variable would be `$input`.
 
 A direct mapping of our C++ format looks something like:
 
@@ -722,5 +722,5 @@ codegen.mlir` followed by `toyc-ch2 codegen.mlir -emit=mlir`. You should also
 use `mlir-tblgen` on the final definition file and study the generated C++ code.
 
 At this point, MLIR knows about our Toy dialect and operations. In the
-[next chapter](chapter-03.md), we will leverage our new dialect to implement some
+[next chapter](../chapter-03/README.md), we will leverage our new dialect to implement some
 high-level language-specific analyses and transformations for the Toy language.

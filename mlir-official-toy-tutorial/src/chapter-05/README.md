@@ -13,7 +13,7 @@ transformations: `Affine`. This dialect is tailored to the computation-heavy
 part of the program and is limited: it doesn't support representing our
 `toy.print` builtin, for instance, neither should it! Instead, we can target
 `Affine` for the computation heavy part of Toy, and in the
-[next chapter](chapter-06.md) directly target the `LLVM IR` dialect for lowering
+[next chapter](../chapter-06/README.md) directly target the `LLVM IR` dialect for lowering
 `print`. As part of this lowering, we will be lowering from the
 [TensorType](../../Dialects/Builtin.md/#rankedtensortype) that `Toy` operates on
 to the [MemRefType](../../Dialects/Builtin.md/#memreftype) that is indexed via
@@ -91,7 +91,7 @@ doesn't matter. See `ConversionTarget::getOpInfo` for the details.
 
 After the conversion target has been defined, we can define how to convert the
 *illegal* operations into *legal* ones. Similarly to the canonicalization
-framework introduced in [chapter 3](chapter-03.md), the
+framework introduced in [chapter 3](../chapter-03/README.md), the
 [`DialectConversion` framework](../../DialectConversion.md) also uses
 [RewritePatterns](../QuickstartRewrites.md) to perform the conversion logic.
 These patterns may be the `RewritePatterns` seen before or a new type of pattern
@@ -346,5 +346,5 @@ and try yourself: `toyc-ch5 test/Examples/Toy/Ch5/affine-lowering.mlir
 -emit=mlir-affine`. We can also check our optimizations by adding `-opt`.
 
 In this chapter we explored some aspects of partial lowering, with the intent to
-optimize. In the [next chapter](chapter-06.md) we will continue the discussion about
+optimize. In the [next chapter](../chapter-06/README.md) we will continue the discussion about
 dialect conversion by targeting LLVM for code generation.

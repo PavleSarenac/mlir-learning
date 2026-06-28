@@ -15,7 +15,7 @@ like to provide the ability for transformations to opaquely hook into dialects
 like Toy to get the information they need.
 
 MLIR provides a set of always available-hooks for certain core transformations,
-as seen in the [previous chapter](chapter-03.md), where we registered some
+as seen in the [previous chapter](../chapter-03/README.md), where we registered some
 canonicalizations via a hook on our operations (`getCanonicalizationPatterns`).
 However, these types of hooks don't really scale well. Therefore, a more generic
 solution was designed, in the form of [interfaces](../../Interfaces.md), to make
@@ -417,15 +417,15 @@ std::unique_ptr<mlir::Pass> mlir::toy::createShapeInferencePass() {
 
 The shape inference algorithm operates as follows:
 
-1.  Build a worklist containing all the operations that return a dynamically
-    shaped tensor: these are the operations that need shape inference.
-2.  Iterate on the worklist:
-    -   find an operation to process: the next ready operation in the worklist
-        has all of its arguments non-generic,
-    -   if no operation is found, break out of the loop,
-    -   remove the operation from the worklist,
-    -   infer the shape of its output from the argument types.
-3.  If the worklist is empty, the algorithm succeeded.
+1. Build a worklist containing all the operations that return a dynamically
+   shaped tensor: these are the operations that need shape inference.
+2. Iterate on the worklist:
+    - find an operation to process: the next ready operation in the worklist
+      has all of its arguments non-generic,
+    - if no operation is found, break out of the loop,
+    - remove the operation from the worklist,
+    - infer the shape of its output from the argument types.
+3. If the worklist is empty, the algorithm succeeded.
 
 When processing an operation like described, we query if it registered the
 `ShapeInference` interface, using this code snippet:
@@ -465,6 +465,6 @@ toy.func @main() {
 You can build `toyc-ch4` and try yourself: `toyc-ch4
 test/Examples/Toy/Ch4/codegen.toy -emit=mlir -opt`.
 
-In the [next chapter](chapter-05.md), we will start the process of code generation by
+In the [next chapter](../chapter-05/README.md), we will start the process of code generation by
 targeting a lower level dialect for optimizing some of the more compute-heavy
 Toy operations.
