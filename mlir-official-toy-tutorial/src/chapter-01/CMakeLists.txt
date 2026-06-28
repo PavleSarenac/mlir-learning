@@ -19,9 +19,7 @@ add_executable(toyc-chapter1
         toy/include/toy/Parser.h
 )
 
-llvm_map_components_to_libnames(llvm_libs Support Core)
-
-message(STATUS "LLVM libs: ${llvm_libs}")
+llvm_map_components_to_libnames(llvm_libs Support)
 
 target_link_libraries(toyc-chapter1
         PRIVATE
