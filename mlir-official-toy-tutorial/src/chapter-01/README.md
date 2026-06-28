@@ -119,8 +119,7 @@ Module:
 
 You can reproduce this result and play with the [ast.toy](toy/test/ast.toy) example. Try running
 `/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/cmake-build-debug/src/chapter-01/toyc-chapter1
-/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-01/toy/test/ast.toy 
--emit=ast`.
+/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-01/toy/test/ast.toy -emit=ast`.
 
 The code for the lexer is fairly straightforward; it is all in a single header [Lexer.h](toy/include/toy/Lexer.h).
 The parser can be found in [Parser.h](toy/include/toy/Parser.h);
