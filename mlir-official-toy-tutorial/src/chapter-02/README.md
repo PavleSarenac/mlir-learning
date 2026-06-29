@@ -24,15 +24,17 @@ pre-defined instructions (*operations* in MLIR terminology) or types.
 
 ## Interfacing with MLIR
 
-[Language Reference](../../LangRef.md)
+[Language Reference](https://github.com/llvm/llvm-project/blob/main/mlir/docs/LangRef.md)
 
 MLIR is designed to be a completely extensible infrastructure; there is no
 closed set of attributes (think: constant metadata), operations, or types. MLIR
 supports this extensibility with the concept of
-[Dialects](../../LangRef.md/#dialects). Dialects provide a grouping mechanism for
+[Dialects](https://github.com/llvm/llvm-project/blob/main/mlir/docs/LangRef.md/#dialects). Dialects provide a grouping
+mechanism for
 abstraction under a unique `namespace`.
 
-In MLIR, [`Operations`](../../LangRef.md/#operations) are the core unit of
+In MLIR, [`Operations`](https://github.com/llvm/llvm-project/blob/main/mlir/docs/LangRef.md/#operations) are the core
+unit of
 abstraction and computation, similar in many ways to LLVM instructions.
 Operations can have application-specific semantics and can be used to represent
 all of the core IR structures in LLVM: instructions, globals (like functions),
@@ -49,7 +51,7 @@ Let's break down the anatomy of this MLIR operation:
 - `%t_tensor`
 
     * The name given to the result defined by this operation (which includes
-      [a prefixed sigil to avoid collisions](../../LangRef.md/#identifiers-and-keywords)).
+      [a prefixed sigil to avoid collisions](https://github.com/llvm/llvm-project/blob/main/mlir/docs/LangRef.md/#identifiers-and-keywords)).
       An operation may define zero or more results (in the context of Toy, we
       will limit ourselves to single-result operations), which are SSA values.
       The name is used during parsing but is not persistent (e.g., it is not
@@ -90,13 +92,16 @@ about and manipulated generically. These concepts are:
 
 - A name for the operation.
 - A list of SSA operand values.
-- A list of [attributes](../../LangRef.md/#attributes).
-- A list of [types](../../LangRef.md/#type-system) for result values.
-- A [source location](../../Diagnostics.md/#source-locations) for debugging
+- A list of [attributes](https://github.com/llvm/llvm-project/blob/main/mlir/docs/LangRef.md/#attributes).
+- A list of [types](https://github.com/llvm/llvm-project/blob/main/mlir/docs/LangRef.md/#type-system) for result values.
+- A [source location](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Diagnostics.md/#source-locations) for
+  debugging
   purposes.
-- A list of successors [blocks](../../LangRef.md/#blocks) (for branches,
+- A list of successors [blocks](https://github.com/llvm/llvm-project/blob/main/mlir/docs/LangRef.md/#blocks) (for
+  branches,
   mostly).
-- A list of [regions](../../LangRef.md/#regions) (for structural operations
+- A list of [regions](https://github.com/llvm/llvm-project/blob/main/mlir/docs/LangRef.md/#regions) (for structural
+  operations
   like functions).
 
 In MLIR, every operation has a mandatory source location associated with it.
@@ -118,7 +123,7 @@ compiler passes - does not include locations in the output by default. The
 MLIR is designed to allow all IR elements, such as attributes, operations, and
 types, to be customized. At the same time, IR elements can always be reduced to
 the above fundamental concepts. This allows MLIR to parse, represent, and
-[round-trip](../../../getting_started/Glossary.md/#round-trip) IR for *any*
+round-trip IR for *any*
 operation. For example, we could place our Toy operation from above into an
 `.mlir` file and round-trip through *mlir-opt* without registering any `toy`
 related dialect:
@@ -215,7 +220,7 @@ To see what this generates, we can run the `mlir-tblgen` command with the
 `gen-dialect-decls` action like so:
 
 ```shell
-${build_root}/bin/mlir-tblgen -gen-dialect-decls ${mlir_src_root}/examples/toy/Ch2/include/toy/Ops.td -I ${mlir_src_root}/include/
+/home/pavle-sarenac/Documents/mlir/mlir-beginner-friendly-tutorial/build/bin/mlir-tblgen -gen-dialect-decls /home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-02/include/toy/Ops.td -I /home/pavle-sarenac/Documents/mlir/mlir-beginner-friendly-tutorial/llvm-project/mlir/include
 ```
 
 After the dialect has been defined, it can now be loaded into an MLIRContext:
@@ -225,7 +230,8 @@ After the dialect has been defined, it can now be loaded into an MLIRContext:
 ```
 
 By default, an `MLIRContext` only loads the
-[Builtin Dialect](../../Dialects/Builtin.md), which provides a few core IR
+[Builtin Dialect](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Dialects/Builtin.md), which provides a few
+core IR
 components, meaning that other dialects, such as our `Toy` dialect, must be
 explicitly loaded.
 
@@ -241,11 +247,14 @@ operation. This operation will represent a constant value in the Toy language.
 ```
 
 This operation takes zero operands, a
-[dense elements](../../Dialects/Builtin.md/#denseintorfpelementsattr) attribute named
+[dense elements](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Dialects/Builtin.md/#denseintorfpelementsattr)
+attribute named
 `value` to represent the constant value, and returns a single result of
-[RankedTensorType](../../Dialects/Builtin.md/#rankedtensortype). An operation class
+[RankedTensorType](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Dialects/Builtin.md/#rankedtensortype). An
+operation class
 inherits from the [CRTP](https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern)
-`mlir::Op` class which also takes some optional [*traits*](../../Traits) to
+`mlir::Op` class which also takes some optional [
+*traits*](https://github.com/llvm/llvm-project/tree/main/mlir/docs/Traits) to
 customize its behavior. `Traits` are a mechanism with which we can inject
 additional behavior into an Operation, such as additional accessors,
 verification, and more. Let's look below at a possible definition for the
@@ -351,7 +360,8 @@ void processConstantOp(mlir::Operation *operation) {
 
 In addition to specializing the `mlir::Op` C++ template, MLIR also supports
 defining operations in a declarative manner. This is achieved via the
-[Operation Definition Specification](../../DefiningDialects/Operations.md) framework. Facts
+[Operation Definition Specification](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DefiningDialects/Operations.md)
+framework. Facts
 regarding an operation are specified concisely into a TableGen record, which
 will be expanded into an equivalent `mlir::Op` C++ template specialization at
 compile time. Using the ODS framework is the desired way for defining operations
@@ -379,7 +389,8 @@ operation.
 
 We define a toy operation by inheriting from our base 'Toy_Op' class above. Here
 we provide the mnemonic and a list of traits for the operation. The
-[mnemonic](../../DefiningDialects/Operations.md/#operation-name) here matches the one given in
+[mnemonic](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DefiningDialects/Operations.md/#operation-name) here
+matches the one given in
 `ConstantOp::getOperationName` without the dialect prefix; `toy.`. Missing here
 from our C++ definition are the `ZeroOperands` and `OneResult` traits; these
 will be automatically inferred based upon the `arguments` and `results` fields
@@ -395,7 +406,7 @@ TableGen looks like. Simply run the `mlir-tblgen` command with the
 `gen-op-decls` or the `gen-op-defs` action like so:
 
 ```shell
-${build_root}/bin/mlir-tblgen -gen-op-defs ${mlir_src_root}/examples/toy/Ch2/include/toy/Ops.td -I ${mlir_src_root}/include/
+/home/pavle-sarenac/Documents/mlir/mlir-beginner-friendly-tutorial/build/bin/mlir-tblgen -gen-op-defs /home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-02/include/toy/Ops.td -I /home/pavle-sarenac/Documents/mlir/mlir-beginner-friendly-tutorial/llvm-project/mlir/include
 ```
 
 Depending on the selected action, this will print either the `ConstantOp` class
@@ -405,8 +416,10 @@ implementation is incredibly useful when getting started with TableGen.
 #### Defining Arguments and Results
 
 With the shell of the operation defined, we can now provide the
-[inputs](../../DefiningDialects/Operations.md/#operation-arguments) and
-[outputs](../../DefiningDialects/Operations.md/#operation-results) to our operation. The
+[inputs](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DefiningDialects/Operations.md/#operation-arguments)
+and
+[outputs](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DefiningDialects/Operations.md/#operation-results) to
+our operation. The
 inputs, or arguments, to an operation may be attributes or types for SSA operand
 values. The results correspond to a set of types for the values produced by the
 operation:
@@ -431,7 +444,8 @@ ConstantOp::value()`.
 
 The next step after defining the operation is to document it. Operations may
 provide
-[`summary` and `description`](../../DefiningDialects/Operations.md/#operation-documentation)
+[`summary` and
+`description`](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DefiningDialects/Operations.md/#operation-documentation)
 fields to describe the semantics of the operation. This information is useful
 for users of the dialect and can even be used to auto-generate Markdown
 documents.
@@ -469,7 +483,8 @@ necessary verification logic based upon the constraints we have given. This
 means that we don't need to verify the structure of the return type, or even the
 input attribute `value`. In many cases, additional verification is not even
 necessary for ODS operations. To add additional verification logic, an operation
-can override the [`verifier`](../../DefiningDialects/Operations.md/#custom-verifier-code)
+can override the [
+`verifier`](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DefiningDialects/Operations.md/#custom-verifier-code)
 field. The `verifier` field allows for defining a C++ code blob that will be run
 as part of `ConstantOp::verify`. This blob can assume that all of the other
 invariants of the operation have already been verified:
@@ -510,7 +525,9 @@ def ConstantOp : Toy_Op<"constant"> {
 The final missing component here from our original C++ example are the `build`
 methods. ODS can generate some simple build methods automatically, and in this
 case it will generate our first build method for us. For the rest, we define the
-[`builders`](../../DefiningDialects/Operations.md/#custom-builder-methods) field. This field
+[
+`builders`](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DefiningDialects/Operations.md/#custom-builder-methods)
+field. This field
 takes a list of `OpBuilder` objects that take a string corresponding to a list
 of C++ parameters, as well as an optional code block that can be used to specify
 the implementation inline.
@@ -583,7 +600,8 @@ One thing to notice here is that all of our Toy operations are printed using the
 generic assembly format. This format is the one shown when breaking down
 `toy.transpose` at the beginning of this chapter. MLIR allows for operations to
 define their own custom assembly format, either
-[declaratively](../../DefiningDialects/Operations.md/#declarative-assembly-format) or
+[declaratively](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DefiningDialects/Operations.md/#declarative-assembly-format)
+or
 imperatively via C++. Defining a custom assembly format allows for tailoring the
 generated IR into something a bit more readable by removing a lot of the fluff
 that is required by the generic format. Let's walk through an example of an
@@ -655,7 +673,8 @@ mlir::ParseResult PrintOp::parse(mlir::OpAsmParser &parser,
 ```
 
 With the C++ implementation defined, let's see how this can be mapped to the
-[declarative format](../../DefiningDialects/Operations.md/#declarative-assembly-format). The
+[declarative format](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DefiningDialects/Operations.md/#declarative-assembly-format).
+The
 declarative format is largely composed of three different components:
 
 * Directives
@@ -681,7 +700,8 @@ def PrintOp : Toy_Op<"print"> {
 }
 ```
 
-The [declarative format](../../DefiningDialects/Operations.md/#declarative-assembly-format) has
+The [declarative format](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DefiningDialects/Operations.md/#declarative-assembly-format)
+has
 many more interesting features, so be sure to check it out before implementing a
 custom format in C++. After beautifying the format of a few of our operations we
 now get a much more readable:
@@ -710,7 +730,8 @@ module {
 Above we introduce several of the concepts for defining operations in the ODS
 framework, but there are many more that we haven't had a chance to: regions,
 variadic operands, etc. Check out the
-[full specification](../../DefiningDialects/Operations.md) for more details.
+[full specification](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DefiningDialects/Operations.md) for more
+details.
 
 ## Complete Toy Example
 
