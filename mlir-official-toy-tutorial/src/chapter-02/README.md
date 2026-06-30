@@ -735,11 +735,13 @@ details.
 
 ## Complete Toy Example
 
-We can now generate our "Toy IR". You can build `toyc-ch2` and try yourself on
-the above example: `toyc-ch2 test/Examples/Toy/Ch2/codegen.toy -emit=mlir
--mlir-print-debuginfo`. We can also check our RoundTrip: `toyc-ch2
-test/Examples/Toy/Ch2/codegen.toy -emit=mlir -mlir-print-debuginfo 2>
-codegen.mlir` followed by `toyc-ch2 codegen.mlir -emit=mlir`. You should also
+We can now generate our "Toy IR". You can build `toyc-chapter2` and try yourself on
+the above example: `/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/cmake-build-debug/src/chapter-02/toyc-chapter2 /home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-02/test/codegen.toy -emit=mlir
+-mlir-print-debuginfo`. We can also check our RoundTrip: `/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/cmake-build-debug/src/chapter-02/toyc-chapter2
+/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-02/test/codegen.toy -emit=mlir -mlir-print-debuginfo 2>
+codegen.mlir` followed by
+`/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/cmake-build-debug/src/chapter-02/toyc-chapter2 /home/pavle-sarenac/codegen.mlir -emit=mlir`.
+You should also
 use `mlir-tblgen` on the final definition file and study the generated C++ code.
 
 At this point, MLIR knows about our Toy dialect and operations. In the
