@@ -13,12 +13,13 @@ We divide compiler transformations into two categories: local and global. In
 this chapter, we focus on how to leverage the Toy Dialect and its high-level
 semantics to perform local pattern-match transformations that would be difficult
 in LLVM. For this, we use MLIR's
-[Generic DAG Rewriter](../../PatternRewriter.md).
+[Generic DAG Rewriter](https://github.com/llvm/llvm-project/blob/main/mlir/docs/PatternRewriter.md).
 
 There are two methods that can be used to implement pattern-match
 transformations: 1. Imperative, C++ pattern-match and rewrite 2. Declarative,
 rule-based pattern-match and rewrite using table-driven
-[Declarative Rewrite Rules](../../DeclarativeRewrites.md) (DRR). Note that the
+[Declarative Rewrite Rules](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DeclarativeRewrites.md) (DRR). Note
+that the
 use of DRR requires that the operations be defined using ODS, as described in
 [Chapter 2](../chapter-02/README.md).
 
@@ -105,10 +106,12 @@ struct SimplifyRedundantTranspose : public mlir::OpRewritePattern<TransposeOp> {
 ```
 
 The implementation of this rewriter is in `ToyCombine.cpp`. The
-[canonicalization pass](../../Canonicalization.md) applies transformations
+[canonicalization pass](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Canonicalization.md) applies
+transformations
 defined by operations in a greedy, iterative manner. To ensure that the
 canonicalization pass applies our new transform, we set
-[hasCanonicalizer = 1](../../DefiningDialects/Operations.md/#hascanonicalizer) and register the
+[hasCanonicalizer = 1](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DefiningDialects/Operations.md/#hascanonicalizer)
+and register the
 pattern with the canonicalization framework.
 
 ```c++
@@ -128,7 +131,7 @@ similar way to LLVM:
   pm.addNestedPass<mlir::toy::FuncOp>(mlir::createCanonicalizerPass());
 ```
 
-Finally, we can run `toyc-ch3 test/Examples/Toy/Ch3/transpose_transpose.toy
+Finally, we can run `/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/cmake-build-debug/src/chapter-03/toyc-chapter3 /home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-03/test/transpose_transpose.toy
 -emit=mlir -opt` and observe our pattern in action:
 
 ```mlir
@@ -150,7 +153,8 @@ adding a new trait, `Pure`, to our `TransposeOp`:
 def TransposeOp : Toy_Op<"transpose", [Pure]> {...}
 ```
 
-Let's retry now `toyc-ch3 test/transpose_transpose.toy -emit=mlir -opt`:
+Let's retry now `/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/cmake-build-debug/src/chapter-03/toyc-chapter3 /home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-03/test/transpose_transpose.toy
+-emit=mlir -opt`:
 
 ```mlir
 toy.func @transpose_transpose(%arg0: tensor<*xf64>) -> tensor<*xf64> {
@@ -186,7 +190,8 @@ def ReshapeReshapeOptPattern : Pat<(ReshapeOp(ReshapeOp $arg)),
 ```
 
 The automatically generated C++ code corresponding to each of the DRR patterns
-can be found under `path/to/BUILD/tools/mlir/examples/toy/Ch3/ToyCombine.inc`.
+can be found under
+`/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/cmake-build-debug/src/chapter-03/ToyCombine.inc`.
 
 DRR also provides a method for adding argument constraints when the
 transformation is conditional on some properties of the arguments and results.
@@ -239,7 +244,7 @@ module {
 }
 ```
 
-We can try to run `toyc-ch3 test/Examples/Toy/Ch3/trivial_reshape.toy -emit=mlir
+We can try to run `/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/cmake-build-debug/src/chapter-03/toyc-chapter3 /home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-03/test/trivial_reshape.toy -emit=mlir
 -opt` and observe our pattern in action:
 
 ```mlir
@@ -255,7 +260,7 @@ module {
 As expected, no reshape operations remain after canonicalization.
 
 Further details on the declarative rewrite method can be found at
-[Table-driven Declarative Rewrite Rule (DRR)](../../DeclarativeRewrites.md).
+[Table-driven Declarative Rewrite Rule (DRR)](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DeclarativeRewrites.md).
 
 In this chapter, we saw how to use certain core transformations through always
 available hooks. In the [next chapter](../chapter-04/README.md), we will see how to use generic
