@@ -18,7 +18,8 @@ MLIR provides a set of always available-hooks for certain core transformations,
 as seen in the [previous chapter](../chapter-03/README.md), where we registered some
 canonicalizations via a hook on our operations (`getCanonicalizationPatterns`).
 However, these types of hooks don't really scale well. Therefore, a more generic
-solution was designed, in the form of [interfaces](../../Interfaces.md), to make
+solution was designed, in the form
+of [interfaces](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Interfaces.md), to make
 the MLIR infrastructure as extensible as the representation. Interfaces provide
 a generic mechanism for dialects and operations to provide information to a
 transformation or analysis.
@@ -45,12 +46,14 @@ dialect, but that can become quite complicated depending on the level of
 complexity that we want. Disregarding cost modeling, the pure structural
 transformation is already complex to implement from scratch. Thankfully, MLIR
 provides a generic inliner algorithm that dialects can plug into. All we need to
-do in Toy is to provide the [interfaces](../../Interfaces.md) for the inliner to
+do in Toy is to provide the [interfaces](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Interfaces.md) for the
+inliner to
 hook into.
 
 The first thing we need to do is to define the constraints on inlining
 operations in the Toy dialect. This information is provided through a
-[dialect interface](../../Interfaces.md/#dialect-interfaces). This is essentially
+[dialect interface](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Interfaces.md/#dialect-interfaces). This is
+essentially
 a class containing a set of virtual hooks which the dialect can override.
 In this case, the interface is `DialectInlinerInterface`.
 
@@ -130,7 +133,8 @@ void ToyDialect::initialize() {
 
 Next, we need to provide a way for the inliner to know that `toy.generic_call`
 represents a call, and `toy.func` represents a function. MLIR provides
-[operation interfaces](../../Interfaces.md/#attributeoperationtype-interfaces) that can be used
+[operation interfaces](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Interfaces.md/#attributeoperationtype-interfaces)
+that can be used
 to mark an operation as being "call-like" or "callable-like". Unlike dialect interfaces,
 operation interfaces provide a more refined granularity of information that is specific
 and core to a single operation. The interfaces that we will be adding here is the
@@ -332,7 +336,8 @@ can define an operation interface that can be specified on operations that need
 to have their result shapes inferred.
 
 Similarly to operations, we can also
-[define operation interfaces](../../Interfaces.md/#attributeoperationtype-interfaces) using
+[define operation interfaces](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Interfaces.md/#attributeoperationtype-interfaces)
+using
 the operation definition specification (ODS) framework.
 
 The interface is defined by inheriting from `OpInterface`, which takes the name
@@ -353,7 +358,8 @@ Next, we define the interface methods that the operations will need to provide.
 An interface method is comprised of: a description; a C++ return type in string
 form; a method name in string form; and a few optional components, depending on
 the need. See the
-[ODS documentation](../../Interfaces.md/#attributeoperationtype-interfaces) for more
+[ODS documentation](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Interfaces.md/#attributeoperationtype-interfaces)
+for more
 information.
 
 ```tablegen
@@ -390,7 +396,8 @@ void MulOp::inferShapes() { getResult().setType(getLhs().getType()); }
 At this point, each of the necessary Toy operations provide a mechanism by which
 to infer their output shapes. The ShapeInferencePass will operate on functions:
 it will run on each function in isolation. MLIR also supports general
-[OperationPasses](../../PassManagement.md/#operation-pass) that run on any
+[OperationPasses](https://github.com/llvm/llvm-project/blob/main/mlir/docs/PassManagement.md/#operation-pass) that run
+on any
 isolated operation, but here our module only contains functions, so there is no
 need to generalize to all operations.
 
@@ -462,8 +469,8 @@ toy.func @main() {
 }
 ```
 
-You can build `toyc-ch4` and try yourself: `toyc-ch4
-test/Examples/Toy/Ch4/codegen.toy -emit=mlir -opt`.
+You can build `toyc-ch4` and try yourself: `/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/cmake-build-debug/src/chapter-04/toyc-chapter4
+/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-04/test/codegen.toy -emit=mlir -opt`.
 
 In the [next chapter](../chapter-05/README.md), we will start the process of code generation by
 targeting a lower level dialect for optimizing some of the more compute-heavy
