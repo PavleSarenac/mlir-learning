@@ -7,5 +7,6 @@ add_subdirectory(src/chapter-01)
 add_subdirectory(src/chapter-02)
 add_subdirectory(src/chapter-03)
 add_subdirectory(src/chapter-04)
+add_subdirectory(src/chapter-05)
 
 add_executable(mlir_official_toy_tutorial main.cpp)

@@ -15,8 +15,10 @@ part of the program and is limited: it doesn't support representing our
 `Affine` for the computation heavy part of Toy, and in the
 [next chapter](../chapter-06/README.md) directly target the `LLVM IR` dialect for lowering
 `print`. As part of this lowering, we will be lowering from the
-[TensorType](../../Dialects/Builtin.md/#rankedtensortype) that `Toy` operates on
-to the [MemRefType](../../Dialects/Builtin.md/#memreftype) that is indexed via
+[TensorType](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Dialects/Builtin.md/#rankedtensortype) that `Toy`
+operates on
+to the [MemRefType](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Dialects/Builtin.md/#memreftype) that is
+indexed via
 an affine loop-nest. Tensors represent an abstract value-typed sequence of data,
 meaning that they don't live in any memory. MemRefs, on the other hand,
 represent lower level buffer access, as they are concrete references to a region
@@ -25,28 +27,32 @@ of memory.
 # Dialect Conversions
 
 MLIR has many different dialects, so it is important to have a unified framework
-for [converting](../../../getting_started/Glossary.md/#conversion) between them.
+for converting between them.
 This is where the `DialectConversion` framework comes into play. This framework
 allows for transforming a set of *illegal* operations to a set of *legal* ones.
 To use this framework, we need to provide two things (and an optional third):
 
-*   A [Conversion Target](../../DialectConversion.md/#conversion-target)
+*
 
-    -   This is the formal specification of what operations or dialects are
-        legal for the conversion. Operations that aren't legal will require
-        rewrite patterns to perform
-        [legalization](../../../getting_started/Glossary.md/#legalization).
+A [Conversion Target](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DialectConversion.md/#conversion-target)
 
-*   A set of
-    [Rewrite Patterns](../../DialectConversion.md/#rewrite-pattern-specification)
+    - This is the formal specification of what operations or dialects are
+      legal for the conversion. Operations that aren't legal will require
+      rewrite patterns to perform legalization.
 
-    -   This is the set of [patterns](../QuickstartRewrites.md) used to convert
-        *illegal* operations into a set of zero or more *legal* ones.
+* A set of
+  [Rewrite Patterns](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DialectConversion.md/#rewrite-pattern-specification)
 
-*   Optionally, a [Type Converter](../../DialectConversion.md/#type-conversion).
+    - This is the set
+      of [patterns](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Tutorials/QuickstartRewrites.md) used to
+      convert
+      *illegal* operations into a set of zero or more *legal* ones.
 
-    -   If provided, this is used to convert the types of block arguments. We
-        won't be needing this for our conversion.
+* Optionally,
+  a [Type Converter](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DialectConversion.md/#type-conversion).
+
+    - If provided, this is used to convert the types of block arguments. We
+      won't be needing this for our conversion.
 
 ## Conversion Target
 
@@ -92,8 +98,9 @@ doesn't matter. See `ConversionTarget::getOpInfo` for the details.
 After the conversion target has been defined, we can define how to convert the
 *illegal* operations into *legal* ones. Similarly to the canonicalization
 framework introduced in [chapter 3](../chapter-03/README.md), the
-[`DialectConversion` framework](../../DialectConversion.md) also uses
-[RewritePatterns](../QuickstartRewrites.md) to perform the conversion logic.
+[`DialectConversion` framework](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DialectConversion.md) also uses
+[RewritePatterns](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Tutorials/QuickstartRewrites.md) to perform
+the conversion logic.
 These patterns may be the `RewritePatterns` seen before or a new type of pattern
 specific to the conversion framework `ConversionPattern`. `ConversionPatterns`
 are different from traditional `RewritePatterns` in that they accept an
@@ -101,8 +108,10 @@ additional `operands` parameter containing operands that have been
 remapped/replaced. This is used when dealing with type conversions, as the
 pattern will want to operate on values of the new type but match against the
 old. For our lowering, this invariant will be useful as it translates from the
-[TensorType](../../Dialects/Builtin.md/#rankedtensortype) currently being
-operated on to the [MemRefType](../../Dialects/Builtin.md/#memreftype). Let's
+[TensorType](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Dialects/Builtin.md/#rankedtensortype) currently
+being
+operated on to
+the [MemRefType](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Dialects/Builtin.md/#memreftype). Let's
 look at a snippet of lowering the `toy.transpose` operation:
 
 ```c++
@@ -186,31 +195,32 @@ lowering, we transform from a value-type, TensorType, to an allocated
 `toy.print` operation, we need to temporarily bridge these two worlds. There are
 many ways to go about this, each with their own tradeoffs:
 
-*   Generate `load` operations from the buffer
+* Generate `load` operations from the buffer
 
-    One option is to generate `load` operations from the buffer type to
-    materialize an instance of the value type. This allows for the definition of
-    the `toy.print` operation to remain unchanged. The downside to this approach
-    is that the optimizations on the `affine` dialect are limited, because the
-    `load` will actually involve a full copy that is only visible *after* our
-    optimizations have been performed.
+  One option is to generate `load` operations from the buffer type to
+  materialize an instance of the value type. This allows for the definition of
+  the `toy.print` operation to remain unchanged. The downside to this approach
+  is that the optimizations on the `affine` dialect are limited, because the
+  `load` will actually involve a full copy that is only visible *after* our
+  optimizations have been performed.
 
-*   Generate a new version of `toy.print` that operates on the lowered type
+* Generate a new version of `toy.print` that operates on the lowered type
 
-    Another option would be to have another, lowered, variant of `toy.print`
-    that operates on the lowered type. The benefit of this option is that there
-    is no hidden, unnecessary copy to the optimizer. The downside is that
-    another operation definition is needed that may duplicate many aspects of
-    the first. Defining a base class in [ODS](../../DefiningDialects/Operations.md) may
-    simplify this, but you still need to treat these operations separately.
+  Another option would be to have another, lowered, variant of `toy.print`
+  that operates on the lowered type. The benefit of this option is that there
+  is no hidden, unnecessary copy to the optimizer. The downside is that
+  another operation definition is needed that may duplicate many aspects of
+  the first. Defining a base class
+  in [ODS](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DefiningDialects/Operations.md) may
+  simplify this, but you still need to treat these operations separately.
 
-*   Update `toy.print` to allow for operating on the lowered type
+* Update `toy.print` to allow for operating on the lowered type
 
-    A third option is to update the current definition of `toy.print` to allow
-    for operating the on the lowered type. The benefit of this approach is that
-    it is simple, does not introduce an additional hidden copy, and does not
-    require another operation definition. The downside to this option is that it
-    requires mixing abstraction levels in the `Toy` dialect.
+  A third option is to update the current definition of `toy.print` to allow
+  for operating the on the lowered type. The benefit of this approach is that
+  it is simple, does not introduce an additional hidden copy, and does not
+  require another operation definition. The downside to this option is that it
+  requires mixing abstraction levels in the `Toy` dialect.
 
 For the sake of simplicity, we will use the third option for this lowering. This
 involves updating the type constraints on the PrintOp in the operation
@@ -342,8 +352,9 @@ func.func @main() {
 
 Here, we can see that a redundant allocation was removed, the two loop nests
 were fused, and some unnecessary `load`s were removed. You can build `toyc-ch5`
-and try yourself: `toyc-ch5 test/Examples/Toy/Ch5/affine-lowering.mlir
--emit=mlir-affine`. We can also check our optimizations by adding `-opt`.
+and try yourself: `/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/cmake-build-debug/src/chapter-05/toyc-chapter5 /home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-05/test/affine-lowering.mlir
+-emit=mlir-affine`. We can also check our optimizations by adding `/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/cmake-build-debug/src/chapter-05/toyc-chapter5 /home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-05/test/affine-lowering.mlir
+-emit=mlir-affine -opt`.
 
 In this chapter we explored some aspects of partial lowering, with the intent to
 optimize. In the [next chapter](../chapter-06/README.md) we will continue the discussion about
