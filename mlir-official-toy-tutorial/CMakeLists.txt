@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.1)
+cmake_minimum_required(VERSION 3.28)
 project(mlir_official_toy_tutorial)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -8,5 +8,6 @@ add_subdirectory(src/chapter-02)
 add_subdirectory(src/chapter-03)
 add_subdirectory(src/chapter-04)
 add_subdirectory(src/chapter-05)
+add_subdirectory(src/chapter-06)
 
 add_executable(mlir_official_toy_tutorial main.cpp)

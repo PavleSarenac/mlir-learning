@@ -3,7 +3,8 @@
 [TOC]
 
 In the [previous chapter](../chapter-05/README.md), we introduced the
-[dialect conversion](../../DialectConversion.md) framework and partially lowered
+[dialect conversion](https://github.com/llvm/llvm-project/blob/main/mlir/docs/DialectConversion.md) framework and
+partially lowered
 many of the `Toy` operations to affine loop nests for optimization. In this
 chapter, we will finally lower to LLVM for code generation.
 
@@ -11,12 +12,12 @@ chapter, we will finally lower to LLVM for code generation.
 
 For this lowering, we will again use the dialect conversion framework to perform
 the heavy lifting. However, this time, we will be performing a full conversion
-to the [LLVM dialect](../../Dialects/LLVM.md). Thankfully, we have already
+to the [LLVM dialect](https://github.com/llvm/llvm-project/blob/main/mlir/docs/Dialects/LLVM.md). Thankfully, we have
+already
 lowered all but one of the `toy` operations, with the last being `toy.print`.
 Before going over the conversion to LLVM, let's lower the `toy.print` operation.
 We will lower this operation to a non-affine loop nest that invokes `printf` for
-each element. Note that, because the dialect conversion framework supports
-[transitive lowering](../../../getting_started/Glossary.md/#transitive-lowering),
+each element. Note that, because the dialect conversion framework supports transitive lowering,
 we don't need to directly emit operations in the LLVM dialect. By transitive
 lowering, we mean that the conversion framework may apply multiple patterns to
 fully legalize an operation. In this example, we are generating a structured
@@ -88,8 +89,7 @@ used for lowering. At this point in the compilation process, we have a
 combination of `toy`, `affine`, `arith`, and `std` operations. Luckily, the
 `affine`, `arith`, and `std` dialects already provide the set of patterns needed
 to transform them into LLVM dialect. These patterns allow for lowering the IR in
-multiple stages by relying on
-[transitive lowering](../../../getting_started/Glossary.md/#transitive-lowering).
+multiple stages by relying on transitive lowering.
 
 ```c++
   mlir::RewritePatternSet patterns(&getContext());
@@ -171,7 +171,7 @@ llvm.func @main() {
 }
 ```
 
-See [LLVM IR Target](../../TargetLLVMIR.md) for
+See [LLVM IR Target](https://github.com/llvm/llvm-project/blob/main/mlir/docs/TargetLLVMIR.md) for
 more in-depth details on lowering to the LLVM dialect.
 
 ## CodeGen: Getting Out of MLIR
@@ -283,7 +283,9 @@ int dumpLLVMIR(mlir::ModuleOp module) {
 Setting up a JIT to run the module containing the LLVM dialect can be done using
 the `mlir::ExecutionEngine` infrastructure. This is a utility wrapper around
 LLVM's JIT that accepts `.mlir` as input. The full code listing for setting up
-the JIT can be found in `Ch6/toyc.cpp` in the `runJit()` function:
+the JIT can be found in
+`/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-06/toyc.cpp` in the `runJit()`
+function:
 
 ```c++
 int runJit(mlir::ModuleOp module) {
@@ -324,11 +326,12 @@ $ echo 'def main() { print([[1, 2], [3, 4]]); }' | ./bin/toyc-ch6 -emit=jit
 
 You can also play with `-emit=mlir`, `-emit=mlir-affine`, `-emit=mlir-llvm`, and
 `-emit=llvm` to compare the various levels of IR involved. Also try options like
-[`--mlir-print-ir-after-all`](../../PassManagement.md/#ir-printing) to track the
+[`--mlir-print-ir-after-all`](https://github.com/llvm/llvm-project/blob/main/mlir/docs/PassManagement.md/#ir-printing)
+to track the
 evolution of the IR throughout the pipeline.
 
 The example code used throughout this section can be found in
-test/Examples/Toy/Ch6/llvm-lowering.mlir.
+`/home/pavle-sarenac/Documents/mlir/mlir-learning/mlir-official-toy-tutorial/src/chapter-06/test/llvm-lowering.mlir`.
 
 So far, we have worked with primitive data types. In the
 [next chapter](../chapter-07/README.md), we will add a composite `struct` type.
